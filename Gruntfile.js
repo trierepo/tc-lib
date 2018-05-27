@@ -1,4 +1,6 @@
 module.exports = function (grunt) {
+    var moduleName = 'tcLib';
+
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
 
@@ -31,7 +33,16 @@ module.exports = function (grunt) {
                     removeRedundantAttributes:      true,
                     removeScriptTypeAttributes:     true,
                     removeStyleLinkTypeAttributes:  true
-                  }
+                },
+                bootstrap: function(module, script) {
+                    var header = "angular.module(\'" + moduleName + "\').run(['$templateCache', function($templateCache) {\n";
+                    var footer = "}]);\n";
+
+                    var cwd = grunt.template.process('');
+                    script = script.replace(new RegExp(cwd, 'g'), '');
+                    script = script.replace(/(^|\n)[ \t]*('use strict'|"use strict");?\s*/g, '$1');
+                    return grunt.template.process(header) + script + footer;
+                }
             },
             app: {
                 src: 'app/**/*.html',
