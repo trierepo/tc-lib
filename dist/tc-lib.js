@@ -100,6 +100,24 @@ angular.module('tcLib').controller('cameraModelCtrl', ['$scope', 'ngDialog', fun
 	};
 }]);
 
+angular.module('tcLib').directive('clickAndDisable', [function() {
+	return {
+        restrict: 'A',
+		scope: {
+			clickAndDisable: '&'
+		},
+		link: function(scope, iElement, iAttrs) {
+			iElement.bind('click', function() {
+                scope.clickAndDisable = scope.clickAndDisable || $timeout(angular.noop, 5000);
+				iElement.prop('disabled',true);
+				scope.clickAndDisable().finally(function() {
+					iElement.prop('disabled',false);
+				});
+			});
+		}
+	};
+}]);
+
 angular.module('tcLib').directive('tcDatePicker', ['$parse', function($parse) {
 	return {
 		restrict: 'E',
@@ -158,19 +176,50 @@ angular.module('tcLib').directive('tcFileInput', [function() {
         require: 'ngModel',
         scope: {
             ngModel: '=',
-            ngChange: '@'
         },
         link: function(scope, elem, attr, ngModel) {
             elem.on("change", function(e) {
                 var files = elem[0].files;
                 if (attr.multiple) {
                     ngModel.$setViewValue(files);
-                    scope.ngChange(files);
                 } else {
                     ngModel.$setViewValue(files[0]);
-                    scope.ngChange(files[0]);
                 }
             });
         }
     }
 }]);
+
+angular.module('tcLib').directive("whenScrolled", function() {
+	return {
+		restrict: 'A',
+		scope: {
+			scrollerApi: '=?',
+			whenScrolled: '&'
+		},
+		link: function(scope, elem, attrs) {
+			var prevScrollTop = 0;
+			raw = elem[0];
+
+            elem.bind("scroll", function() {
+				if ((prevScrollTop < raw.scrollTop) && (raw.scrollTop + raw.offsetHeight >= raw.scrollHeight)) {
+					scope.whenScrolled();
+					prevScrollTop = raw.scrollTop;
+				}
+			});
+			
+			function scrollerApi() {
+				function resetScroll() {
+					prevScrollTop = 0;
+					raw.scrollTop = 0;
+				}
+
+				return {
+					resetScroll: resetScroll
+				};
+			}
+
+			scope.scrollerApi = scrollerApi();
+		}
+	};
+})
