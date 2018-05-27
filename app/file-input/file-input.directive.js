@@ -6,7 +6,7 @@ angular.module('tcLib').directive('tcFileInput', [function() {
             ngModel: '=',
             ngChange: '@'
         },
-        link: function(scope, ele, attr, ngModel) {
+        link: function(scope, elem, attr, ngModel) {
             elem.on("change", function(e) {
                 var files = elem[0].files;
                 if (attr.multiple) {

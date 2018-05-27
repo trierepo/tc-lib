@@ -42,4 +42,5 @@ module.exports = function (grunt) {
 
     //register grunt default task
     grunt.registerTask('default', ['clean:dist', 'ngAnnotate', 'concat', 'uglify']);
+    grunt.registerTask('build', ['clean:dist', 'ngAnnotate', 'concat', 'uglify']);
 };
