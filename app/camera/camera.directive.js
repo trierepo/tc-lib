@@ -17,7 +17,7 @@ angular.module('tcLib').directive('tcCamera', ['ngDialog', function(ngDialog) {
 			};
 			scope.capturePhoto = function() {
 				ngDialog.open({
-		    		template:'capturPhotoTemplate.html',
+		    		template:'app/camera/camera-modal.html',
 		    		className: 'ngdialog-theme-default ngdialog-lg',
 		    		controller: 'cameraModelCtrl',
 		    		scope: scope
