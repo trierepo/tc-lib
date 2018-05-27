@@ -20,6 +20,25 @@ module.exports = function (grunt) {
             }
         },
 
+        ngtemplates: {
+            options: {
+                htmlmin: {
+                    collapseBooleanAttributes:      true,
+                    collapseWhitespace:             true,
+                    removeAttributeQuotes:          false,
+                    removeComments:                 true,
+                    removeEmptyAttributes:          false,
+                    removeRedundantAttributes:      true,
+                    removeScriptTypeAttributes:     true,
+                    removeStyleLinkTypeAttributes:  true
+                  }
+            },
+            app: {
+                src: 'app/**/*.html',
+                dest: 'dist/app/templates.js'
+            }
+        },
+
         ngAnnotate: {
             options: {
                 singleQuotes: true
@@ -39,8 +58,10 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-contrib-clean');
     grunt.loadNpmTasks('grunt-ng-annotate'); 
+    grunt.loadNpmTasks('grunt-angular-templates');
+
 
     //register grunt default task
-    grunt.registerTask('default', ['clean:dist', 'ngAnnotate', 'concat', 'uglify']);
-    grunt.registerTask('build', ['clean:dist', 'ngAnnotate', 'concat', 'uglify']);
+    grunt.registerTask('default', ['clean:dist', 'ngAnnotate', 'ngtemplates', 'concat', 'uglify']);
+    grunt.registerTask('build', ['clean:dist', 'ngAnnotate', 'ngtemplates', 'concat', 'uglify']);
 };
