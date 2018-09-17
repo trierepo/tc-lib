@@ -1,13 +1,15 @@
 angular.module('tcLib').directive('tcCamera', ['ngDialog', function(ngDialog) {
     return {
-        restrict: 'E',
+		restrict: 'A',
+		require: 'ngModel',
 		scope: {
-			model: "=ngModel",
 			onCapture: '&',
 			confirmText: '@'
 		},
-		template: '<button class="btn btn-info"ng-click="capturePhoto()">Photo</button>',
-		link: function(scope, ele, attr) {
+		link: function(scope, ele, attr, ngModel) {
+			angular.element(ele).bind('click', function() {
+				scope.capturePhoto();
+			});
 			scope.autoClose = !scope.confirmText;
 			scope.setModel = function(snap) {
 				scope.tempModel = snap;
@@ -24,7 +26,8 @@ angular.module('tcLib').directive('tcCamera', ['ngDialog', function(ngDialog) {
 		    	}).closePromise.then(function() {
 		    		if (typeof scope.onCapture === 'function') {
 		    			if (scope.confirmed) {
-		    				scope.model = scope.tempModel;
+							debugger;
+		    				ngModel.$setViewValue(scope.tempModel);
 		    			}
 		    			scope.onCapture({$snap: scope.tempModel});
 		    		}
