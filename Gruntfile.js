@@ -1,5 +1,5 @@
 module.exports = function (grunt) {
-    var moduleName = 'tc-lib';
+    var moduleName = 'tcLib';
 
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
