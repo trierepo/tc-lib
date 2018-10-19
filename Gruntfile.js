@@ -1,12 +1,12 @@
 module.exports = function (grunt) {
-    var moduleName = 'tcLib';
+    var moduleName = 'tc-lib';
 
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
 
         concat: {
             js: {
-                src: ['./dist/app/tcLib.js', './dist/app/**/*.js'],
+                src: ['./dist/app/tc-lib.js', './dist/app/**/*.js'],
                 dest: './dist/tc-lib.js'
             }
         },
@@ -45,8 +45,8 @@ module.exports = function (grunt) {
                 }
             },
             app: {
-                src: 'app/**/*.html',
-                dest: 'dist/app/templates.js'
+                src: 'src/**/*.html',
+                dest: 'dist/src/templates.js'
             }
         },
 
@@ -57,7 +57,7 @@ module.exports = function (grunt) {
             app: {
                 files: [{
                     expand: true,
-                    src: ['app/**/*.js'],
+                    src: ['src/**/*.js'],
                     dest: './dist',
                 }]
             }
