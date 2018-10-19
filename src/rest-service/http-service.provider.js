@@ -1,10 +1,16 @@
-angular.module('tcLib').provider('httpProvider', [function() {
-	var basePath = '/';
+angular.module('tcLib').provider('httpService', function() {
+	var basePath = '';
+	try {
+		basePath = location.href.split('/')[3];
+	} catch(err) {
+		basePath = '';
+	}
+
 	this.setBasePath = function(_basePath) {
 		basePath = _basePath;
 	};
 
-	this.$get = ['$http', function httpProvider($http) {
+	this.$get = ['$http', '$q', function httpService($http, $q) {
 		return {
 			get: reqWithoutPayload.bind(null, 'GET'),
 			del: reqWithoutPayload.bind(null, 'DELETE'),
@@ -31,7 +37,7 @@ angular.module('tcLib').provider('httpProvider', [function() {
 			});
 		}
 		
-		function upload(reqType,url, formData, urlParams, nullAllowed) {
+		function upload(reqType, url, formData, urlParams, nullAllowed) {
 			url = _appendUrlParams(url, urlParams, nullAllowed);
 			return _sendRequest({
 				url: url,
@@ -60,7 +66,7 @@ angular.module('tcLib').provider('httpProvider', [function() {
 			if (urlParams) {
 				url += '?' + toURLParams(urlParams, nullAllowed);
 			}
-			return basePath + url;
+			return '/' + basePath + '/' + url;
 		}
 		
 		function _sendRequest(req) {
@@ -77,4 +83,4 @@ angular.module('tcLib').provider('httpProvider', [function() {
 			return defer.promise;
 		}
 	}];
-}]);
+});

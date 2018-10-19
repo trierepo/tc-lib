@@ -6,7 +6,7 @@ module.exports = function (grunt) {
 
         concat: {
             js: {
-                src: ['./dist/app/tc-lib.js', './dist/app/**/*.js'],
+                src: ['./dist/src/tcLib.js', './dist/src/**/*.js'],
                 dest: './dist/tc-lib.js'
             }
         },

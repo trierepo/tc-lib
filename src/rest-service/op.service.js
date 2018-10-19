@@ -1,36 +1,34 @@
-angular.module('tcLib').service('opService', ['httpProvider', function(httpProvider) {
-    return {
-        create: create,
-        search: search,
-        get: get,
-        statusList: statusList,
-        configCreate: configCreate,
-        configList: configList
-    };
+angular.module('tcLib').service('tcOPService', ['httpService', function(httpService) {
+    this.create = create;
+    this.search = search;
+    this.get = get;
+    this.statusList = statusList;
+    this.configCreate = configCreate;
+    this.configList = configList;
 
     function create(op) {
-        return httpProvider.post('op/create', op);
+        return httpService.post('op/create', op);
     }
 
     function search(payload) {
-        return httpProvider.post('op/op-list', payload);
+        return httpService.post('op/op-list', payload);
     }
 
     function get(id) {
-        return httpProvider.get('op/get/' + id);
+        return httpService.get('op/get/' + id);
     }
 
     function statusList(date) {
-        return httpProvider.get('op/op-status-list', {
+        return httpService.get('op/op-status-list', {
             date: date
         });
     }
 
     function configCreate(payload) {
-        return httpProvider.post('op/config/create', payload);
+        return httpService.post('op/config/create', payload);
     }
 
     function configList() {
-        return httpProvider.get('op/config/list');
+        return httpService.get('op/config/list');
     }
 }]);
