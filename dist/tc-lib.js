@@ -160,6 +160,74 @@ angular.module('tcLib').directive('tcFileInput', [function() {
     }
 }]);
 
+angular.module('tcLib').service('casesheet', ['httpService', function(httpService) {
+    this.save = save;
+    this.caseSheetList = caseSheetList;
+
+    function save(casesheet) {
+        return httpService.post('casesheet/saveorupdate', casesheet);
+    }
+
+    function caseSheetList(opPatientId) {
+        return httpService.get('casesheet/search', {
+            opPatientId: opPatientId // optional
+        });
+    }
+}]);
+
+angular.module('tcLib').service('companyService', ['httpService', function(httpService) {
+    this.save = save;
+    this.companiesList = companiesList;
+
+    function save(company) {
+        return httpService.post('company/saveorupdate', company);
+    }
+
+    function companiesList() {
+        return httpService.get('company/list');
+    }
+}]);
+
+angular.module('tcLib').service('complaintService', ['httpService', function(httpService) {
+    this.saveComplaint = saveComplaint;
+    this.saveComplaintTransationm = saveComplaintTransation;
+    this.complaintMastersList = complaintMastersList;
+    this.complaintTransactList = complaintTransactList;
+
+    function saveComplaint(complaintMaster) {
+        return httpService.post('complaint/save', complaintMaster);
+    }
+
+    function saveComplaintTransation(complaintTransact) {
+        return httpService.post('complaint/transact/saveorupdate', complaintTransact);
+    }
+
+    function complaintMastersList(patientId) {
+        return httpService.get('complaint/search', {
+            patientId: patientId // optional
+        });
+    }
+
+    function complaintTransactList(patientId) {
+        return httpService.get('complaint/transact/search', {
+            patientId: patientId // optional
+        });
+    }
+}]);
+
+angular.module('tcLib').service('drugFormulae', ['httpService', function(httpService) {
+    this.save = save;
+    this.drugFormulaeList = drugFormulaeList;
+
+    function save(drugFormulae) {
+        return httpService.post('drugFormulae/saveorupdate', drugFormulae);
+    }
+
+    function drugFormulaeList() {
+        return httpService.get('drugFormulae/list');
+    }
+}]);
+
 angular.module('tcLib').provider('httpService', function() {
 	var basePath = '';
 	try {
@@ -199,7 +267,7 @@ angular.module('tcLib').provider('httpService', function() {
 			});
 		}
 		
-		function upload(reqType,url, formData, urlParams, nullAllowed) {
+		function upload(reqType, url, formData, urlParams, nullAllowed) {
 			url = _appendUrlParams(url, urlParams, nullAllowed);
 			return _sendRequest({
 				url: url,
@@ -247,18 +315,125 @@ angular.module('tcLib').provider('httpService', function() {
 	}];
 });
 
-angular.module('tcLib').service('tcOPService', ['httpService', function(httpService) {
+angular.module('tcLib').service('locationService', ['httpService', function(httpService) {
+    this.save = save;
+    this.locationsList = locationsList;
+
+    function save(location) {
+        return httpService.post('location/saveorupdate', location);
+    }
+
+    function locationsList() {
+        return httpService.get('location/list');
+    }
+}]);
+
+angular.module('tcLib').service('medicineCategoryService', ['httpService', function(httpService) {
+    this.save = save;
+    this.medicineCategoryList = medicineCategoryList;
+
+    function save(medicineCategory) {
+        return httpService.post('medicinecategory/saveorupdate', medicineCategory);
+    }
+
+    function medicineCategoryList() {
+        return httpService.get('medicinecategory/list');
+    }
+}]);
+
+angular.module('tcLib').service('medicineCategoryByDoctorService', ['httpService', function(httpService) {
+    this.save = save;
+    this.medicineCategoryByDoctorList = medicineCategoryByDoctorList;
+
+    function save(medicineCategoryByDoctor) {
+        return httpService.post('medicinecategorybydoctor/saveorupdate', medicineCategoryByDoctor);
+    }
+
+    function medicineCategoryByDoctorList() {
+        return httpService.get('medicinecategorybydoctor/list');
+    }
+}]);
+
+angular.module('tcLib').service('medicineService', ['httpService', function(httpService) {
+    this.save = save;
+    this.medicinesList = medicinesList;
+    this.medicineViewList = medicineViewList;
+
+    function save(medicine) {
+        return httpService.post('medicine/saveorupdate', medicine);
+    }
+
+    function medicineViewList(payload) {
+        return httpService.get('medicine/listbyoptions', payload);
+    }
+
+    function medicinesList(id) {
+        return httpService.get('medicine/list', {
+            id: id // optional
+        });
+    }
+
+}]);
+
+angular.module('tcLib').service('opPatientService', ['httpService', function(httpService) {
+    this.save = save;
+    this.getOpPatientsListByOptions = getOpPatientsListByOptions;
+    this.getOpPatientByPatientId = getOpPatientByPatientId;
+    this.getOpPatientCountWithStatusByOpId = getOpPatientCountWithStatusByOpId;
+    this.getOrCreatePatientCard = getOrCreatePatientCard;
+    this.createPatientCard = createPatientCard;
+
+    function save(opPatient) {
+        return httpService.post('oppatient/createorupdate', opPatient);
+    }
+
+    function getOpPatientsListByOptions(opPatient) {
+        return httpService.post('oppatient/listbyoptions', opPatient);
+    }
+
+    function getOpPatientByPatientId(opPatientId) {
+        return httpService.get('oppatient/getoppatientbyid/' + opPatientId);
+    }
+
+    function getOpPatientCountWithStatusByOpId(opId) {
+        return httpService.get('oppatient/statuscount/{opId}',opId);
+    }
+
+    function getOrCreatePatientCard(patientCardInfo) {
+        return httpService.post('oppatient/patient-card', patientCardInfo);
+    }
+
+    function createPatientCard(patientCardInfo) {
+        return httpService.post('oppatient/patient-card/new',patientCardInfo);
+    }
+}]);
+
+angular.module('tcLib').service('opPrescriptionService', ['httpService', function(httpService) {
+    this.save = save;
+    this.searchPurchaseMedicines = searchPurchaseMedicines;
+    this.opPrescriptionList = opPrescriptionList;
+
+    function save(prescription) {
+        return httpService.post('opprescription/saveorupdate', prescription);
+    }
+
+    function searchPurchaseMedicines(payload) {
+        return httpService.get('opprescription/medicine-search', payload);
+    }
+
+    function opPrescriptionList(payload) {
+        return httpService.get('opprescription/list', payload);
+    }
+
+}]);
+
+angular.module('tcLib').service('opService', ['httpService', function(httpService) {
     this.create = create;
     this.search = search;
     this.get = get;
     this.statusList = statusList;
     this.configCreate = configCreate;
     this.configList = configList;
-    this.login = login;
-
-    function login(payload) {
-        return httpService.post('auth/login', payload);
-    }
 
     function create(op) {
         return httpService.post('op/create', op);
@@ -284,6 +459,257 @@ angular.module('tcLib').service('tcOPService', ['httpService', function(httpServ
 
     function configList() {
         return httpService.get('op/config/list');
+    }
+}]);
+
+angular.module('tcLib').service('patientService', ['httpService', function(httpService) {
+    this.save = save;
+    this.patientsListByOptions = patientsListByOptions;
+    this.imageData = imageData;
+
+    function save(patient) {
+        return httpService.post('patient/saveorupdate', patient);
+    }
+
+    function patientsListByOptions(payload) {
+        return httpService.get('patient/listbyoptions', payload);
+    }
+
+    function imageData(payload) {
+        return httpService.get('patient/getphoto', payload);
+    }
+
+    
+  
+}]);
+
+angular.module('tcLib').service('purchasebillMedicineService', ['httpService', function(httpService) {
+    this.purchaseBillMedicines = purchaseBillMedicines;
+    this.alertInfo = alertInfo;
+    this.pendingBillMedicines  = pendingBillMedicines;
+
+  
+    function purchaseBillMedicines(payload) {
+        return httpService.get('purchasebillmedicine/search', payload);
+    }
+
+    function alertInfo(payload) {
+        return httpService.get('purchasebillmedicine/alertinfo', payload);
+    }
+    function pendingBillMedicines(billId) {
+        return httpService.get('purchasebillmedicine/pendingbills', {
+            billId: billId
+        });
+    }
+
+}]);
+
+angular.module('tcLib').service('purchasebillService', ['httpService', function(httpService) {
+    this.createPurchaseBill = createPurchaseBill;
+    this.purchaseBillById = purchaseBillById;
+    this.purchaseBillsListByOptions = purchaseBillsListByOptions;
+    this.purchaseTotal = purchaseTotal;
+    this.createPurchaseBillPayment = createPurchaseBillPayment;
+    this.purchaseBillPaymentList = purchaseBillPaymentList;
+    this.createPurchaseBillReturn = createPurchaseBillReturn;
+    this.purchaseReturns = purchaseReturns;
+    this.purchaseReturnMedicines = purchaseReturnMedicines;
+    this.uploadPurchaseBill = uploadPurchaseBill;
+
+    function createPurchaseBill(purchaseBill) {
+        return httpService.post('purchasebill/save', purchaseBill);
+    }
+
+    function purchaseBillById(id) {
+        return httpService.get('purchasebill/get/{id}' + id);
+    }
+
+    function purchaseBillsListByOptions(payload) {
+        return httpService.get('purchasebill/search', payload);
+    }
+
+    function purchaseTotal(payload) {
+        return httpService.get('purchasebill/total', payload);
+    }
+
+    function createPurchaseBillPayment(purchasePayment) {
+        return httpService.post('purchasebill/payment/save', purchasePayment);
+    }
+
+    function purchaseBillPaymentList(payload) {
+        return httpService.get('purchasebill/payment/search', payload);
+    }
+
+    function createPurchaseBillReturn(purchaseReturn) {
+        return httpService.post('purchasebill/return/save', purchaseReturn);
+    }    
+    
+    function purchaseReturns(payload) {
+        return httpService.get('purchasebill/returns/get', payload);
+    }
+
+    function purchaseReturnMedicines(payload) {
+        return httpService.get('purchasebill/return/medicines/get', payload);
+    }
+    
+    function uploadPurchaseBill(payload) {
+        return httpService.post('purchasebill/upload/{billId}', payload);
+    }
+
+}]);
+
+
+
+angular.module('tcLib').service('reportsService', ['httpService', function(httpService) {
+    this.salesReports = salesReports;
+    this.salesReturnReports = salesReturnReports;
+    this.salesPaymentReports = salesPaymentReports;
+    this.purchaseReports = purchaseReports;
+    this.salesTransactions  = salesTransactions;
+    this.purchaseTransactions = purchaseTransactions;
+    this.paymentTransactionsByDateRange = paymentTransactionsByDateRange;
+    this.adjustMrpByDateRange = adjustMrpByDateRange;
+    this.adjustUnitsOrAvailability = adjustUnitsOrAvailability;
+
+    function salesReports(payload) {
+        return httpService.get('reports/sales/bills', payload);
+    }
+
+    function salesReturnReports(payload) {
+        return httpService.get('reports/sales/returns', payload);
+    }
+
+    function salesPaymentReports(payload) {
+        return httpService.get('reports/sales/payments', payload);
+    }
+
+
+    function purchaseReports(payload) {
+        return httpService.get('reports/purchase', payload);
+    }
+
+    
+    function salesTransactions(payload) {
+        return httpService.get('reports/salesTransactions', payload);
+    }
+
+    function purchaseTransactions(payload) {
+        return httpService.get('reports/purchaseTransactions', payload);
+    }
+
+    function paymentTransactionsByDateRange(salesPayment) {
+        return httpService.post('reports/create', salesPayment);
+    }
+
+    function adjustMrpByDateRange(taxAdjust) {
+        return httpService.post('reports/adjustMrp', taxAdjust);
+    }
+
+    function adjustUnitsOrAvailability(salesBillMedicines) {
+        return httpService.post('reports/adjustunitsoravailability', salesBillMedicines);
+    }   
+
+    function salesTransactions(payload) {
+        return httpService.get('reports/salesPayments', payload);
+    }
+
+}]);
+
+angular.module('tcLib').service('representativeService', ['httpService', function(httpService) {
+    this.save = save;
+    this.representativesList = representativesList;
+
+    function save(representative) {
+        return httpService.post('representative/saveorupdate', representative);
+    }
+
+   
+    function representativesList() {
+        return httpService.get('representative/list');
+    }
+}]);
+
+angular.module('tcLib').service('salesbillService', ['httpService', function(httpService) {
+    this.create = create;
+    this.salesBillsListByOptions = salesBillsListByOptions;
+    this.salesAmount = salesAmount;
+    this.medicineSearch = medicineSearch;
+    this.createSalesBillPayment = createSalesBillPayment;
+    this.paymentsList = paymentsList;
+    this.createSalesBillReturn  = createSalesBillReturn;
+    this.returnsList = returnsList;
+    this.prescriptionsList = prescriptionsList;
+    this.savePrescriptionSale = savePrescriptionSale;
+    this.createPrescriptionSale = createPrescriptionSale;
+    this.salesReturnTotal = salesReturnTotal;
+
+
+    this.configCreate = configCreate;
+    this.configList = configList;
+
+    function create(salesBill) {
+        return httpService.post('salesbill/save', salesBill);
+    }
+
+    function salesBillsListByOptions(payload) {
+        return httpService.get('salesbill/list', payload);
+    }
+
+    function salesAmount(payload) {
+        return httpService.get('salesbill/total', payload);
+    }
+
+    function medicineSearch(payload) {
+        return httpService.get('salesbill/medicines/search', payload);
+    }
+
+    function createSalesBillPayment(payment) {
+        return httpService.post('salesbill/payment/save', payment);
+    }
+
+    function paymentsList(billId) {
+        return httpService.get('salesbill/payment/search', {
+            billId: billId //optional
+        });
+    }
+
+    function createSalesBillReturn(salesReturns) {
+        return httpService.post('salesbill/return/save', salesReturns);
+    }
+
+    function returnsList(payload) {
+        return httpService.get('salesbill/return/search', payload);
+    }
+
+
+    function prescriptionsList(payload) {
+        return httpService.get('salesbill/prescription/search', payload);
+    }
+
+    function savePrescriptionSale(payload) {
+        return httpService.post('salesbill/prescription/save/{prescriptionId}', payload);
+    }
+
+    function createPrescriptionSale(salesBill) {
+        return httpService.post('salesbill/prescription/add', salesBill);
+    }
+    
+    function salesReturnTotal(payload) {
+        return httpService.get('salesbill/returns/total', payload);
+    }
+
+}]);
+
+angular.module('tcLib').service('supplierService', ['httpService', function(httpService) {
+    this.save = save;
+    this.suppliersList = suppliersList;
+
+    function save(supplier) {
+        return httpService.post('supplier/saveorupdate', supplier);
+    }
+
+    function suppliersList() {
+        return httpService.get('supplier/list');
     }
 }]);
 

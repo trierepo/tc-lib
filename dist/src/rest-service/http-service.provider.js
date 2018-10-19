@@ -37,7 +37,7 @@ angular.module('tcLib').provider('httpService', function() {
 			});
 		}
 		
-		function upload(reqType,url, formData, urlParams, nullAllowed) {
+		function upload(reqType, url, formData, urlParams, nullAllowed) {
 			url = _appendUrlParams(url, urlParams, nullAllowed);
 			return _sendRequest({
 				url: url,

@@ -1,15 +1,10 @@
-angular.module('tcLib').service('tcOPService', ['httpService', function(httpService) {
+angular.module('tcLib').service('opService', ['httpService', function(httpService) {
     this.create = create;
     this.search = search;
     this.get = get;
     this.statusList = statusList;
     this.configCreate = configCreate;
     this.configList = configList;
-    this.login = login;
-
-    function login(payload) {
-        return httpService.post('auth/login', payload);
-    }
 
     function create(op) {
         return httpService.post('op/create', op);
