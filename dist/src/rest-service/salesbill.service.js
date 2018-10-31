@@ -11,7 +11,7 @@ angular.module('tcLib').service('salesbillService', ['httpService', function(htt
     this.savePrescriptionSale = savePrescriptionSale;
     this.createPrescriptionSale = createPrescriptionSale;
     this.salesReturnTotal = salesReturnTotal;
-
+    this.generateInvoiceNum = generateInvoiceNum;
 
     this.configCreate = configCreate;
     this.configList = configList;
@@ -67,4 +67,7 @@ angular.module('tcLib').service('salesbillService', ['httpService', function(htt
         return httpService.get('salesbill/returns/total', payload);
     }
 
+    function generateInvoiceNum() {
+        return httpService.get('salesbill/generateinvoicenum');
+    }
 }]);

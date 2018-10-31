@@ -7,7 +7,7 @@ angular.module('tcLib').directive('tcDatePicker', ['$parse', function($parse) {
 			placeholder: '@',
 			model: "=ngModel",
 		},
-		templateUrl: 'app/date-picker/date-picker.html',
+		templateUrl: 'src/date-picker/date-picker.html',
 		link: function(scope, attr, e) {
 
 			function updateOptions() {

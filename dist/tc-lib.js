@@ -96,7 +96,7 @@ angular.module('tcLib').directive('tcDatePicker', ['$parse', function($parse) {
 			placeholder: '@',
 			model: "=ngModel",
 		},
-		templateUrl: 'app/date-picker/date-picker.html',
+		templateUrl: 'src/date-picker/date-picker.html',
 		link: function(scope, attr, e) {
 
 			function updateOptions() {
@@ -172,6 +172,55 @@ angular.module('tcLib').service('casesheet', ['httpService', function(httpServic
         return httpService.get('casesheet/search', {
             opPatientId: opPatientId // optional
         });
+    }
+}]);
+
+angular.module('tcLib').service('commonService', ['httpService', function(httpService) {
+
+    this.createDoctor = createDoctor;
+    this.getDoctors = getDoctors;
+    this.getDoctorByUserId = getDoctorByUserId;
+    this.getOpTypes = getOpTypes;
+    this.getOpSubTypes = getOpSubTypes;
+    this.getLabData = getLabData;
+    this.getLabReportData = getLabReportData;
+    this.getLabTestNotes = getLabTestNotes;
+    this.getRequisitionSlip = getRequisitionSlip;
+
+    function createDoctor(casesheet) {
+        return httpService.post('common/doctor/create', casesheet);
+    }
+
+    function getDoctors() {
+        return httpService.get('common/doctor/list');
+    }
+
+    function getDoctorByUserId(userId) {
+        return httpService.get('common/doctor/user/' + userID);
+    }
+
+    function getOpTypes() {
+        return httpService.get('common/optype/list');
+    }
+
+    function getOpSubTypes() {
+        return httpService.get('common/opsubtype/list');
+    }
+
+    function getLabData() {
+        return httpService.get('common/lab/lab-data');
+    }
+
+    function getLabReportData() {
+        return httpService.get('common/lab/lab-report-data');
+    }
+
+    function getLabTestNotes() {
+        return httpService.get('common/lab/lab-test-notes');
+    }
+
+    function getRequisitionSlip() {
+        return httpService.get('common/lab/requisition-slip');
     }
 }]);
 
@@ -315,6 +364,44 @@ angular.module('tcLib').provider('httpService', function() {
 	}];
 });
 
+angular.module('tcLib').service('labPatientService', ['httpService', function(httpService) {
+    this.save = save;
+    this.search = search;
+    this.saveReport = saveReport;
+    this.getReport = getReport;
+    this.savePayment = savePayment;
+    this.getPayments = getPayments;
+    this.uploadReport = uploadReport;
+
+    function save(payload) {
+        return httpService.post('labpatient/save', payload);
+    }
+
+    function search(params) {
+        return httpService.get('labpatient/get', params);
+    }
+
+    function saveReport(payload) {
+        return httpService.post('labpatient/report/save', payload);
+    }
+
+    function getReport(labPatientId) {
+        return httpService.get('report/get/' + labPatientId);
+    }
+
+    function savePayment(payload) {
+        return httpService.post('payment/save', payload);
+    }
+
+    function getPayments(labReportId) {
+        return httpService.get('get/payments/' + labReportId);
+    }
+
+    function uploadReport(labPatientId, formData) {
+        return httpService.upload('uploadreport/' + labPatientId, formData);
+    }
+}]);
+
 angular.module('tcLib').service('locationService', ['httpService', function(httpService) {
     this.save = save;
     this.locationsList = locationsList;
@@ -325,6 +412,19 @@ angular.module('tcLib').service('locationService', ['httpService', function(http
 
     function locationsList() {
         return httpService.get('location/list');
+    }
+}]);
+
+angular.module('tcLib').service('loginService', ['httpService', function(httpService) {
+    this.login = login;
+    this.sessionUser = sessionUser;
+
+    function login(payload) {
+        return httpService.post('auth/login', payload);
+    }
+
+    function sessionUser() {
+        return httpService.get('auth/sessionuser');
     }
 }]);
 
@@ -642,7 +742,7 @@ angular.module('tcLib').service('salesbillService', ['httpService', function(htt
     this.savePrescriptionSale = savePrescriptionSale;
     this.createPrescriptionSale = createPrescriptionSale;
     this.salesReturnTotal = salesReturnTotal;
-
+    this.generateInvoiceNum = generateInvoiceNum;
 
     this.configCreate = configCreate;
     this.configList = configList;
@@ -698,6 +798,9 @@ angular.module('tcLib').service('salesbillService', ['httpService', function(htt
         return httpService.get('salesbill/returns/total', payload);
     }
 
+    function generateInvoiceNum() {
+        return httpService.get('salesbill/generateinvoicenum');
+    }
 }]);
 
 angular.module('tcLib').service('supplierService', ['httpService', function(httpService) {
