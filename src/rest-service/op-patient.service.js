@@ -19,7 +19,7 @@ angular.module('tcLib').service('opPatientService', ['httpService', function(htt
     }
 
     function getOpPatientCountWithStatusByOpId(opId) {
-        return httpService.get('oppatient/statuscount/{opId}',opId);
+        return httpService.get('oppatient/statuscount/'+opId);
     }
 
     function getOrCreatePatientCard(patientCardInfo) {

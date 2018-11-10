@@ -2,6 +2,7 @@ angular.module('tcLib').service('reportsService', ['httpService', function(httpS
     this.salesReports = salesReports;
     this.salesReturnReports = salesReturnReports;
     this.salesPaymentReports = salesPaymentReports;
+    this.paymentReports = paymentReports;
     this.purchaseReports = purchaseReports;
     this.salesTransactions  = salesTransactions;
     this.purchaseTransactions = purchaseTransactions;
@@ -19,6 +20,10 @@ angular.module('tcLib').service('reportsService', ['httpService', function(httpS
 
     function salesPaymentReports(payload) {
         return httpService.get('reports/sales/payments', payload);
+    }
+
+    function paymentReports(payload){
+        return httpService.post('reports/payments', payload);
     }
 
 

@@ -13,9 +13,6 @@ angular.module('tcLib').service('salesbillService', ['httpService', function(htt
     this.salesReturnTotal = salesReturnTotal;
     this.generateInvoiceNum = generateInvoiceNum;
 
-    this.configCreate = configCreate;
-    this.configList = configList;
-
     function create(salesBill) {
         return httpService.post('salesbill/save', salesBill);
     }
@@ -55,8 +52,8 @@ angular.module('tcLib').service('salesbillService', ['httpService', function(htt
         return httpService.get('salesbill/prescription/search', payload);
     }
 
-    function savePrescriptionSale(payload) {
-        return httpService.post('salesbill/prescription/save/{prescriptionId}', payload);
+    function savePrescriptionSale(payload,prescId,isResale) {
+        return httpService.post('salesbill/prescription/save/'+prescId+'?isResale='+(isResale || false), payload);
     }
 
     function createPrescriptionSale(salesBill) {

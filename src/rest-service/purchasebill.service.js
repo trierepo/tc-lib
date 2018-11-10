@@ -15,7 +15,7 @@ angular.module('tcLib').service('purchasebillService', ['httpService', function(
     }
 
     function purchaseBillById(id) {
-        return httpService.get('purchasebill/get/{id}' + id);
+        return httpService.get('purchasebill/get/' + id);
     }
 
     function purchaseBillsListByOptions(payload) {
@@ -46,8 +46,8 @@ angular.module('tcLib').service('purchasebillService', ['httpService', function(
         return httpService.get('purchasebill/return/medicines/get', payload);
     }
     
-    function uploadPurchaseBill(payload) {
-        return httpService.post('purchasebill/upload/{billId}', payload);
+    function uploadPurchaseBill(payload,billId) {
+        return httpService.post('purchasebill/upload/'+billId, payload);
     }
 
 }]);

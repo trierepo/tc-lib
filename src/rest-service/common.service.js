@@ -19,7 +19,7 @@ angular.module('tcLib').service('commonService', ['httpService', function(httpSe
     }
 
     function getDoctorByUserId(userId) {
-        return httpService.get('common/doctor/user/' + userID);
+        return httpService.get('common/doctor/user/' + userId);
     }
 
     function getOpTypes() {

@@ -1,6 +1,6 @@
 angular.module('tcLib').service('complaintService', ['httpService', function(httpService) {
     this.saveComplaint = saveComplaint;
-    this.saveComplaintTransationm = saveComplaintTransation;
+    this.saveComplaintTransation = saveComplaintTransation;
     this.complaintMastersList = complaintMastersList;
     this.complaintTransactList = complaintTransactList;
 
@@ -18,9 +18,9 @@ angular.module('tcLib').service('complaintService', ['httpService', function(htt
         });
     }
 
-    function complaintTransactList(patientId) {
+    function complaintTransactList(opPatientId) {
         return httpService.get('complaint/transact/search', {
-            patientId: patientId // optional
+            opPatientId: opPatientId // optional
         });
     }
 }]);
