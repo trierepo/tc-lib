@@ -818,6 +818,20 @@ angular.module('tcLib').service('supplierService', ['httpService', function(http
     }
 }]);
 
+angular.module('tcLib').filter('tcCamelCase', function() {
+	return function(input) {
+		input = input || ''; 
+		return input.replace(/\w\S*/g, function(txt){
+			var str = txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+			for (var i=0;i<str.length;i++) {
+				if(str[i]==='.') {
+					str = str.replace(str.charAt(i+1),function(a){return a.toUpperCase();});
+				}
+			}
+			return str;
+		});
+	};
+})
 angular.module('tcLib').run(['$templateCache', function($templateCache) {
 $templateCache.put('src/camera/camera-modal.html',
     "<div class=\"camera-wrapper row\"><ng-camera capture-message=\"Done!\" class=\"grid-md-5\" countdown=\"3\" output-height=\"240\" output-width=\"320\" viewer-height=\"315\" viewer-width=\"420\" image-format=\"jpeg\" jpeg-quality=\"100\" action-message=\"Take picture\" snapshot=\"model\" overlay-url=\"./assets/images/overlay.png\" shutter-url=\"./assets/sounds/camera-click.mp3\" on-capture=\"onCamCapture($snap)\"></ng-camera><div class=\"preview-wrapper grid-md-5\" ng-if=\"model\"><img ng-src=\"{{model}}\" alt=\"Click capture to see preview\"><div class=\"grid-md-4 ngdialog-buttons\"><button class=\"btn btn-md btn-green\" ng-if=\"confirmText && model\" ng-click=\"confirm();closeThisDialog(0)\">{{confirmText}}</button> <button class=\"btn btn-md btn-grey\" ng-if=\"confirmText\" ng-click=\"cancel();closeThisDialog(0);\">Cancel</button></div></div></div>"
