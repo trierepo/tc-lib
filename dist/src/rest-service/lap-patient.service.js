@@ -20,18 +20,18 @@ angular.module('tcLib').service('labPatientService', ['httpService', function(ht
     }
 
     function getReport(labPatientId) {
-        return httpService.get('report/get/' + labPatientId);
+        return httpService.get('labpatient/report/get/' + labPatientId);
     }
 
     function savePayment(payload) {
-        return httpService.post('payment/save', payload);
+        return httpService.post('labpatient/payment/save', payload);
     }
 
     function getPayments(labReportId) {
-        return httpService.get('get/payments/' + labReportId);
+        return httpService.get('labpatient/get/payments/' + labReportId);
     }
 
     function uploadReport(labPatientId, formData) {
-        return httpService.upload('uploadreport/' + labPatientId, formData);
+        return httpService.upload('labpatient/uploadreport/' + labPatientId, formData);
     }
 }]);
