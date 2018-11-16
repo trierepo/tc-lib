@@ -217,4 +217,4 @@ angular.module('tcLib').directive("whenScrolled", function() {
 			scope.scrollerApi = scrollerApi();
 		}
 	};
-})
+});
